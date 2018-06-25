@@ -7,10 +7,10 @@ use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
+
     public function index()
     {
-
-	$tasks = Task::all();
+        $tasks = Task::all();
 
     return view('tasks.index', compact('tasks'));
 	}
@@ -24,13 +24,11 @@ class TaskController extends Controller
 
 	public function create()
     {
-
     return view('tasks.create');
 	}
 
     public function store()
     {
-
         $this->validate(request(),[
 
             'task' => 'required',
@@ -53,9 +51,9 @@ class TaskController extends Controller
     public function delete($id)
     {
         Task::find($id)->delete();
+
     return redirect('/');
     }
-//-------------------------------------//
 	
     public function edit($id)
     {

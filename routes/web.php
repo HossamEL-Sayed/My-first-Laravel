@@ -1,6 +1,5 @@
 <?php
 
-
 Route::get('/', 'TaskController@index');
 
 Route::get('/create', 'TaskController@create');
