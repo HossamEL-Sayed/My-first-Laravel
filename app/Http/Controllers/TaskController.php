@@ -9,30 +9,25 @@ use App\Block;
 
 class TaskController extends Controller
 {
-    //main page
-
+    // TODO:: Search for PHP DocBlocks
     public function index()
     {
         $tasks = Task::all();
 
-    return view('tasks.task', compact('tasks'));
+        return view('tasks.task', compact('tasks')); // Make it tasks.show
     }
-
-    //Create New Task
 
     public function create()
     {
         $categories=Category::all();
-
         $blocks = Block::all();
 
-    return view('tasks.create', compact('categories', 'blocks'));
+        return view('tasks.create', compact('categories', 'blocks'));
     }
 
     public function store(Request $request)
     {
-
-        $this->validate(request(),[
+        $this->validate(request(), [
 
             'task' => 'required',
 
@@ -61,12 +56,10 @@ class TaskController extends Controller
 
     //read specific task
 
-	public function show(Task $task)
+    public function show(Task $task)
     {
-
-        
-    return view('tasks.show', compact('task'));
-	}	
+        return view('tasks.show', compact('task'));
+    }
 
     //edit task
 
@@ -76,13 +69,12 @@ class TaskController extends Controller
 
         $blocks = Block::all();
 
-    return view('tasks.edit', compact('task', 'categories', 'blocks'));
+        return view('tasks.edit', compact('task', 'categories', 'blocks'));
     }
 
-    public function update(Request $request , Task $task)
+    public function update(Request $request, Task $task)
     {
-
-        $this->validate(request(),[
+        $this->validate(request(), [
 
             'task' => 'required',
 
@@ -113,6 +105,6 @@ class TaskController extends Controller
     {
         Task::find($id)->delete();
 
-    return redirect('/task');
+        return redirect('/task');
     }
 }
