@@ -7,11 +7,11 @@
 	<h1 style="text-align: center">To DO List</h1>
 	<hr>
 
-		<h2 style='margin-left:100px'>Tasks</h2>
+		<h2 style='margin-left:20px'>Tasks</h2>
 			<table border="2">
 				<thead>
 					<tr>
-						<th>Task</th>
+						<th>Tasks</th>
 						<th>Actions</th>
 					</tr>
 				</thead>
@@ -19,7 +19,7 @@
 					@foreach ($tasks as $row)
 						<tr>
 							<td>
-								<a href="/read/{{ $row->id }}"> {{ $row->body }} </a>
+								<a href="/show/{{ $row->id }}"> {{ $row->body }} </a>
 							</td>
 							<td>
 								<form action="/edit/{{ $row->id }} ">
@@ -37,6 +37,7 @@
 			<br>
 
 	<form method="get" action="/create">
+
 		<input type="submit" name="create" value="Create New Task">
 	</form>
 </body>

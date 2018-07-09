@@ -2,85 +2,117 @@
 
 namespace App\Http\Controllers;
 
-use App\Task;
 use Illuminate\Http\Request;
+use App\Task;
+use App\Category;
+use App\Block;
 
 class TaskController extends Controller
 {
+    //main page
 
     public function index()
     {
         $tasks = Task::all();
 
-    return view('tasks.index', compact('tasks'));
-	}
+    return view('tasks.task', compact('tasks'));
+    }
 
-	public function show($id)
+    //Create New Task
+
+    public function create()
     {
-    	$task = Task::find($id);
+        $categories=Category::all();
 
-    return view('tasks.show', compact('task'));
-	}	
+        $blocks = Block::all();
 
-	public function create()
+    return view('tasks.create', compact('categories', 'blocks'));
+    }
+
+    public function store(Request $request)
     {
-    return view('tasks.create');
-	}
 
-    public function store()
-    {
         $this->validate(request(),[
 
             'task' => 'required',
 
-            'description' => 'required'
+            'description' => 'required',
+
+            'category_id' => 'required',
+
+            'block' => 'required'
 
         ]);
 
-        task::create([
+        $task = new Task;
 
-            'body'=> request('task'),
+        $task->body = $request->task;
 
-            'description'=> request('description')
+        $task->description= $request->description;
 
-        ]);
+        $task->category_id = $request->category_id;
 
-        return redirect('/');
+        $task->save();
+
+        $task->blocks()->sync($request->block, false);
+
+        return redirect('/task');
     }
+
+    //read specific task
+
+	public function show(Task $task)
+    {
+
+        
+    return view('tasks.show', compact('task'));
+	}	
+
+    //edit task
+
+    public function edit(Task $task)
+    {
+        $categories=Category::all();
+
+        $blocks = Block::all();
+
+    return view('tasks.edit', compact('task', 'categories', 'blocks'));
+    }
+
+    public function update(Request $request , Task $task)
+    {
+
+        $this->validate(request(),[
+
+            'task' => 'required',
+
+            'description' => 'required',
+
+            'category_id' => 'required',
+
+            'block' => 'required'
+
+        ]);
+
+        $task->body = $request->task;
+
+        $task->description= $request->description;
+
+        $task->category_id = $request->category_id;
+
+        $task->save();
+
+        $task->blocks()->sync($request->block, false);
+
+        return redirect('/task');
+    }
+
+    //delete task
 
     public function delete($id)
     {
         Task::find($id)->delete();
 
-    return redirect('/');
-    }
-	
-    public function edit($id)
-    {
-        $task = Task::find($id);
-
-    return view('tasks.edit', compact('task'));
-	}
-
-	public function update(request $request, $id)
-    {
-
-        $this->validate(request(),[
-
-            'task' => 'required',
-
-            'description' => 'required'
-
-        ]);
-
-        $task = Task::find($id);
-
-        $task->body = request('task');
-
-        $task->description = request('description');
-
-        $task->save();
-
-        return redirect('/');
+    return redirect('/task');
     }
 }
