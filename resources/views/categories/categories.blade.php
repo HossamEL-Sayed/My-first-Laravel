@@ -27,34 +27,45 @@
 
     <section class="jumbotron text-center">
       	<div class="container">
-        	<h1 class="jumbotron-heading">Details of {{$task->title}}</h1>
+        	<h1 class="jumbotron-heading">Categories</h1>
       	</div>
       	<div>
       		<table border-collapse="collapse" border="1">
 				<thead>
 					<tr>
-						<th>Task Title</th>
-						<th>Decription</th>
-						<th>Category Title</th>
-						<th>Blocks Title</th>
+						<th>Title</th>
+						<th>Actions</th>
 					</tr>
 				</thead>
 				<tbody>
+					@foreach ($categories as $row)
 						<tr>
-							<td>{{ $task->title }}</td>
-							<td>{{ $task->description }}</td>
-							<td>{{ $task->category->title }}</td>
 							<td>
-								@foreach ($task->blocks as $row)
-						
-									{{$row->title}}<br>
+								<a href="{{route('category')}}/{{$row->id}}"> {{$row->title}} </a>
+							</td>
+							<td>
+								<form method="POST" action="{{route('category')}}/{{$row->id}}/edit">
+									<input type="hidden" name="_method" value="GET">
+									<input type="hidden" name="_token" value="{{ csrf_token() }}">
+						 			<input class="btn btn-primary" type="submit" name="edit" value="Edit">
+						 		</form>
 
-								@endforeach
+								<form method="POST" action="{{route('category')}}/{{$row->id}} ">
+									<input type="hidden" name="_method" value="DELETE">
+							 		<input type="hidden" name="_token" value="{{ csrf_token() }}">
+									<input class="btn btn-secondary" type="submit" name="delete" value="Delete">
+						 		</form>
 							</td>
 						</tr>
+					@endforeach
 				</tbody>
 			</table>
 		</div>
+		<form method="POST" action="{{route('category')}}/create">
+			<input type="hidden" name="_method" value="GET">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+			<input class="btn btn-primary" type="submit" name="create" value="Create New Catigory">
+		</form>
     </section>
 
   </body>

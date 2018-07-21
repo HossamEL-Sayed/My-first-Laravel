@@ -27,41 +27,22 @@
 
     <section class="jumbotron text-center">
       <div class="container">
-        <h1 class="jumbotron-heading">Creating New Task</h1>
+        <h1 class="jumbotron-heading">Edit {{$category->title}}</h1>
       </div>
 
-      	<form method="POST" action="{{route('task')}}">
+      	<form method="POST" action="{{route('category')}}/{{$category->id}}">
+			<input type="hidden" name="_method" value="PUT">
+			<input type="hidden" name="_token" value="{{ csrf_token() }}">
 
-		{{csrf_field()}}
+      <label for="category" class="lead text-muted"><b>Category Title</b></label></br>
+			<textarea for="category" name="title" id="title">{{$category->title}}</textarea>
+			<br><br>
 
-		<label for="task" class="lead text-muted"><b>Task Title</b>
-		</label>
-		</br>
-		<input for="task" type="text" name="title" id="title">
-		</br></br>
-
-		<label for="description" class="lead text-muted"><b>Description</b>
-		</label>
-		</br>
-		<textarea for="description" name="description" id="description"></textarea>
-		</br></br>
-
-		<select name="category_id">
-		@foreach($categories as $category)
-			<option value="{{$category->id}}">{{$category->title}}</option>
-		@endforeach
-		</select> 
-		</br></br>
-
-		@foreach($blocks as $block)
-			 <input type="checkbox" name="block[]" value="{{$block->id}}">{{$block->title}}<br>
-		@endforeach 
-		</br></br>
-
-		<input class="btn btn-primary" type="submit" name="create" value="Create">
-	</form>
+			<input class="btn btn-primary" type="submit" name="update" value="Update">
+		</form>
     </section>
 
 	@include('errors')
   </body>
 </html>
+

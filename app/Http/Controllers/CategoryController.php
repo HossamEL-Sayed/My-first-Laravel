@@ -3,81 +3,93 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Category;
+use App\Http\Requests\validationCategory;
 use App\Task;
+use App\Category;
 
 class CategoryController extends Controller
 {
-    //main page
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $categories = Category::all();
 
-    return view('categories.category', compact('categories'));
-	}
-
-    //create new category
-
-    public function createCat()
-    {
-    return view('categories.createCat');
+        return view('categories.categories', compact('categories'));
     }
 
-    public function storeCat()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
     {
-        $this->validate(request(),[
-
-            'category' => 'required'
-
-        ]);
-
-        category::create([
-
-            'category' => request('category')
-
-        ]);
-
-        return redirect('/category');
+        return view('categories.create');
     }
 
-    //read the category tasks
-
-    public function showCat(Category $category)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(validationCategory $request)
     {
+        category::create($request->all());
 
-    return view('categories.showCat', compact('category'));
+        return redirect()->route('category');
     }
 
-    //edit the category name
-
-    public function editCat(Category $category)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Category $category)
     {
-    return view('categories.editCat', compact('category'));
+        return view('categories.show', compact('category'));
+    }  
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Category $category)
+    {
+        return view('categories.edit', compact('category'));
     }
 
-    public function updateCat(Category $category)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(validationCategory $request, Category $category)
     {
-
-        $this->validate(request(),[
-
-            'category' => 'required'
-
-        ]);
-
-        $category->category = request('category');
-
-        $category->save();
-
-        return redirect('/category');
+        $category->update($request->all());
+        
+        return redirect()->route('category');
     }
 
-    //delete the category
-
-    public function deleteCat($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Category $category)
     {
-        Category::find($id)->delete();
+        $category->delete();
 
-    return redirect('/category');
+        return redirect()->route('category');
     }
 }

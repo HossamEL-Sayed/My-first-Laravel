@@ -26,42 +26,28 @@
     </div>
 
     <section class="jumbotron text-center">
-      <div class="container">
-        <h1 class="jumbotron-heading">Creating New Task</h1>
-      </div>
-
-      	<form method="POST" action="{{route('task')}}">
-
-		{{csrf_field()}}
-
-		<label for="task" class="lead text-muted"><b>Task Title</b>
-		</label>
-		</br>
-		<input for="task" type="text" name="title" id="title">
-		</br></br>
-
-		<label for="description" class="lead text-muted"><b>Description</b>
-		</label>
-		</br>
-		<textarea for="description" name="description" id="description"></textarea>
-		</br></br>
-
-		<select name="category_id">
-		@foreach($categories as $category)
-			<option value="{{$category->id}}">{{$category->title}}</option>
-		@endforeach
-		</select> 
-		</br></br>
-
-		@foreach($blocks as $block)
-			 <input type="checkbox" name="block[]" value="{{$block->id}}">{{$block->title}}<br>
-		@endforeach 
-		</br></br>
-
-		<input class="btn btn-primary" type="submit" name="create" value="Create">
-	</form>
+      	<div class="container">
+        	<h1 class="jumbotron-heading">Tasks</h1>
+      	</div>
+      	<div>
+      		<table border-collapse="collapse" border="1">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Description</th>
+					</tr>
+				</thead>
+				<tbody>
+					@foreach ($category->tasks as $row)
+						<tr>
+							<td>{{$row->title}}</td>
+							<td>{{$row->description}}</td>
+						</tr>
+					@endforeach
+				</tbody>
+			</table>
+		</div>
     </section>
 
-	@include('errors')
   </body>
 </html>

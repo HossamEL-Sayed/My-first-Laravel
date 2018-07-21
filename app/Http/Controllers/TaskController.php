@@ -3,116 +3,107 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\validationTask;
+use Illuminate\Routing\Redirector;
 use App\Task;
 use App\Category;
 use App\Block;
 
 class TaskController extends Controller
 {
-    //main page
-
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function index()
     {
         $tasks = Task::all();
-
-    return view('tasks.task', compact('tasks'));
+        return view('tasks.tasks', compact('tasks'));
     }
 
-    //Create New Task
-
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function create()
     {
         $categories=Category::all();
-
         $blocks = Block::all();
 
-    return view('tasks.create', compact('categories', 'blocks'));
+        return view('tasks.create', compact('categories', 'blocks'));
     }
 
-    public function store(Request $request)
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(validationTask $request)
     {
-
-        $this->validate(request(),[
-
-            'task' => 'required',
-
-            'description' => 'required',
-
-            'category_id' => 'required',
-
-            'block' => 'required'
-
-        ]);
-
         $task = new Task;
-
-        $task->body = $request->task;
-
+        $task->title = $request->title;
         $task->description= $request->description;
-
         $task->category_id = $request->category_id;
-
         $task->save();
+        $task->blocks()->attach($request->block);
 
-        $task->blocks()->sync($request->block, false);
 
-        return redirect('/task');
+        return redirect()->route('task');
     }
 
-    //read specific task
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show(Task $task)
+    {   
+        return view('tasks.show', compact('task'));
+    }   
 
-	public function show(Task $task)
-    {
-
-        
-    return view('tasks.show', compact('task'));
-	}	
-
-    //edit task
-
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Task $task)
     {
         $categories=Category::all();
-
         $blocks = Block::all();
 
-    return view('tasks.edit', compact('task', 'categories', 'blocks'));
+        return view('tasks.edit', compact('task', 'categories', 'blocks'));
     }
 
-    public function update(Request $request , Task $task)
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(validationTask $request , Task $task)
     {
+        $task->update($request->all());
+        $task->blocks()->sync($request->block);
 
-        $this->validate(request(),[
-
-            'task' => 'required',
-
-            'description' => 'required',
-
-            'category_id' => 'required',
-
-            'block' => 'required'
-
-        ]);
-
-        $task->body = $request->task;
-
-        $task->description= $request->description;
-
-        $task->category_id = $request->category_id;
-
-        $task->save();
-
-        $task->blocks()->sync($request->block, false);
-
-        return redirect('/task');
+        return redirect()->route('task');
     }
 
-    //delete task
-
-    public function delete($id)
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Task $task)
     {
-        Task::find($id)->delete();
+        $task->delete();
 
-    return redirect('/task');
+        return redirect()->route('task');
     }
 }
