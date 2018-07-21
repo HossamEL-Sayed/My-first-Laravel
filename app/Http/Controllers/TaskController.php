@@ -11,6 +11,7 @@ use App\Block;
 
 class TaskController extends Controller
 {
+<<<<<<< HEAD
     /**
      * Display a listing of the resource.
      *
@@ -27,6 +28,16 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+=======
+    // TODO:: Search for PHP DocBlocks
+    public function index()
+    {
+        $tasks = Task::all();
+
+        return view('tasks.task', compact('tasks')); // Make it tasks.show
+    }
+
+>>>>>>> b126d1b1a30de3091c5979249e02acc7e5b62702
     public function create()
     {
         $categories=Category::all();
@@ -43,6 +54,21 @@ class TaskController extends Controller
      */
     public function store(validationTask $request)
     {
+<<<<<<< HEAD
+=======
+        $this->validate(request(), [
+
+            'task' => 'required',
+
+            'description' => 'required',
+
+            'category_id' => 'required',
+
+            'block' => 'required'
+
+        ]);
+
+>>>>>>> b126d1b1a30de3091c5979249e02acc7e5b62702
         $task = new Task;
         $task->title = $request->title;
         $task->description= $request->description;
@@ -54,6 +80,7 @@ class TaskController extends Controller
         return redirect()->route('task');
     }
 
+<<<<<<< HEAD
     /**
      * Display the specified resource.
      *
@@ -71,6 +98,17 @@ class TaskController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+=======
+    //read specific task
+
+    public function show(Task $task)
+    {
+        return view('tasks.show', compact('task'));
+    }
+
+    //edit task
+
+>>>>>>> b126d1b1a30de3091c5979249e02acc7e5b62702
     public function edit(Task $task)
     {
         $categories=Category::all();
@@ -79,6 +117,7 @@ class TaskController extends Controller
         return view('tasks.edit', compact('task', 'categories', 'blocks'));
     }
 
+<<<<<<< HEAD
     /**
      * Update the specified resource in storage.
      *
@@ -92,6 +131,33 @@ class TaskController extends Controller
         $task->blocks()->sync($request->block);
 
         return redirect()->route('task');
+=======
+    public function update(Request $request, Task $task)
+    {
+        $this->validate(request(), [
+
+            'task' => 'required',
+
+            'description' => 'required',
+
+            'category_id' => 'required',
+
+            'block' => 'required'
+
+        ]);
+
+        $task->body = $request->task;
+
+        $task->description= $request->description;
+
+        $task->category_id = $request->category_id;
+
+        $task->save();
+
+        $task->blocks()->sync($request->block, false);
+
+        return redirect('/task');
+>>>>>>> b126d1b1a30de3091c5979249e02acc7e5b62702
     }
 
     /**
@@ -104,6 +170,10 @@ class TaskController extends Controller
     {
         $task->delete();
 
+<<<<<<< HEAD
         return redirect()->route('task');
+=======
+        return redirect('/task');
+>>>>>>> b126d1b1a30de3091c5979249e02acc7e5b62702
     }
 }
