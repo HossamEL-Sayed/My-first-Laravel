@@ -21,7 +21,7 @@
 
     <div class="navbar navbar-inverse bg-inverse">
       <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand">Laravel Crud</a>
+        <a href="/" class="navbar-brand">Laravel Crud</a>
       </div>
     </div>
 
@@ -30,16 +30,16 @@
         <h1 class="jumbotron-heading">Edit {{$block->title}}</h1>
       </div>
 
-      	<form method="POST" action="{{route('block')}}/{{$block->id}}>
-			<input type="hidden" name="_method" value="PUT">
-			<input type="hidden" name="_token" value="{{ csrf_token() }}">
+      <form method="POST" action="{{route('block')}}/{{$block->id}}">
+		    <input type="hidden" name="_method" value="PUT">
+		    <input type="hidden" name="_token" value="{{ csrf_token() }}">
 
       <label for="block" class="lead text-muted"><b>Block Title</b></label></br>
 			<textarea for="block" name="title" id="title">{{$block->title}}</textarea>
 			<br><br>
 
 			<input class="btn btn-primary" type="submit" name="update" value="Update">
-		</form>
+		  </form>
     </section>
 
 	@include('errors')

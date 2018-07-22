@@ -21,7 +21,7 @@
 
     <div class="navbar navbar-inverse bg-inverse">
       <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand">Laravel Crud</a>
+        <a href="/" class="navbar-brand">Laravel Crud</a>
       </div>
     </div>
 
@@ -32,34 +32,34 @@
 
       	<form method="POST" action="{{route('task')}}">
 
-		{{csrf_field()}}
+      		{{csrf_field()}}
 
-		<label for="task" class="lead text-muted"><b>Task Title</b>
-		</label>
-		</br>
-		<input for="task" type="text" name="title" id="title">
-		</br></br>
+      		<label for="task" class="lead text-muted"><b>Task Title</b>
+      		</label>
+      		</br>
+      		<input for="task" type="text" name="title" id="title">
+      		</br></br>
 
-		<label for="description" class="lead text-muted"><b>Description</b>
-		</label>
-		</br>
-		<textarea for="description" name="description" id="description"></textarea>
-		</br></br>
+      		<label for="description" class="lead text-muted"><b>Description</b>
+      		</label>
+      		</br>
+      		<textarea for="description" name="description" id="description"></textarea>
+      		</br></br>
 
-		<select name="category_id">
-		@foreach($categories as $category)
-			<option value="{{$category->id}}">{{$category->title}}</option>
-		@endforeach
-		</select> 
-		</br></br>
+      		<select name="category_id">
+      		@foreach($categories as $category)
+      			<option value="{{$category->id}}">{{$category->title}}</option>
+      		@endforeach
+      		</select> 
+      		</br></br>
 
-		@foreach($blocks as $block)
-			 <input type="checkbox" name="block[]" value="{{$block->id}}">{{$block->title}}<br>
-		@endforeach 
-		</br></br>
+      		@foreach($blocks as $block)
+      			 <input type="checkbox" name="block[]" value="{{$block->id}}">{{$block->title}}<br>
+      		@endforeach 
+      		</br></br>
 
-		<input class="btn btn-primary" type="submit" name="create" value="Create">
-	</form>
+      		<input class="btn btn-primary" type="submit" name="create" value="Create">
+      	</form>
     </section>
 
 	@include('errors')

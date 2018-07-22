@@ -41,7 +41,7 @@ class BlockController extends Controller
     {
         block::create($request->all());
 
-        return redirect('/blocks');
+        return redirect()->route('block');
     }
 
     /**
@@ -77,7 +77,7 @@ class BlockController extends Controller
     {
         $block->update($request->all());
         
-        return redirect('/blocks');
+        return redirect()->route('block');
     }
 
     /**
@@ -90,6 +90,6 @@ class BlockController extends Controller
     {
         $block->delete();
 
-        return redirect('/blocks');
+        return redirect()->route('block');
     }
 }

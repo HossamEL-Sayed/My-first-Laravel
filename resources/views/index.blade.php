@@ -21,14 +21,14 @@
 
     <div class="navbar navbar-inverse bg-inverse">
       <div class="container d-flex justify-content-between">
-        <a href="#" class="navbar-brand">Laravel Crud</a>
+        <a href="/" class="navbar-brand">Laravel Crud</a>
       </div>
     </div>
 
     <section class="jumbotron text-center">
       <div class="container">
         <h1 class="jumbotron-heading">To DO List</h1>
-        <p class="lead text-muted">You can add your tasks and divided them as you like</p>
+        <p class="lead text-muted">You can add your tasks and divide them as you like</p>
         <p>
         	<a href="tasks" class="btn btn-primary"> Show Tasks </a>
         	<a href="categories" class="btn btn-secondary"> Show Categories </a>
